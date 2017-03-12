@@ -2,6 +2,7 @@ package com.javarush.task.task11.task1110;
 
 /* 
 Добавь недостающие переменные
+Посмотри внимательно на методы и добавь недостающие поля.
 */
 
 public class Solution {

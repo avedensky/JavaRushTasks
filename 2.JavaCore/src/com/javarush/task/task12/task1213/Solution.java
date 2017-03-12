@@ -2,6 +2,7 @@ package com.javarush.task.task12.task1213;
 
 /* 
 Исправь код. Вторая задача
+Исправь код, чтобы программа компилировалась.
 */
 
 public class Solution {

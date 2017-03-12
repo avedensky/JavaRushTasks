@@ -2,6 +2,7 @@ package com.javarush.task.task12.task1232;
 
 /* 
 Нужно добавить в программу новую функциональность
+Сделать класс Pegas(пегас) на основе класса Horse(лошадь) и интерфейса Fly(летать).
 */
 
 public class Solution {

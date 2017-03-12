@@ -2,6 +2,7 @@ package com.javarush.task.task12.task1202;
 
 /* 
 Ничего не выводится на экран
+Переопределить метод getName в классе Whale(Кит), чтобы программа ничего не выводила на экран.
 */
 
 public class Solution {

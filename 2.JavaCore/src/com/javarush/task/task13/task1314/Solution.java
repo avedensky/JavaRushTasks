@@ -4,6 +4,7 @@ import java.awt.*;
 
 /* 
 Класс BigFox
+1. Исправь класс BigFox так, чтобы программа компилировалась.
 */
 
 public class Solution {

@@ -2,6 +2,8 @@ package com.javarush.task.task11.task1103;
 
 /* 
 В гостях у бабушки
+Написать шесть классов: Animal (животное), Cow (корова), Pig (свинья), Sheep (овца), Bull (бык) и Goat (козел).
+Унаследовать корову, свинью, овцу, быка и козла от животного.
 */
 
 public class Solution {

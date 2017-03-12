@@ -2,6 +2,7 @@ package com.javarush.task.task12.task1201;
 
 /* 
 Я не корова, Я - кит
+Переопределить метод getName в классе Whale(Кит), чтобы программа выдавала:
 */
 
 public class Solution {

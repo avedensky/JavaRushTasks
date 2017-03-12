@@ -2,6 +2,8 @@ package com.javarush.task.task11.task1120;
 
 /* 
 Пятая правильная «цепочка наследования»
+Расставь правильно «цепочку наследования» в классах: House (дом), Cat (кот), Dog (собака),
+Car (машина), Animal (животное), Assets (имущество).
 */
 
 public class Solution {

@@ -2,6 +2,7 @@ package com.javarush.task.task11.task1122;
 
 /* 
 Нужно добавить в программу новую функциональность
+Добавь общий базовый класс ChessFigure к классам-фигур: (фигуры из шахмат).
 */
 
 public class Solution {

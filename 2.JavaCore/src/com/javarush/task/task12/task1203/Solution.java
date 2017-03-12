@@ -2,6 +2,7 @@ package com.javarush.task.task12.task1203;
 
 /* 
 Кот от кота, а собака от собаки
+Переопределить метод getChild в классах Cat(кот) и Dog(собака), чтобы кот порождал кота, а собака – собаку.
 */
 
 public class Solution {

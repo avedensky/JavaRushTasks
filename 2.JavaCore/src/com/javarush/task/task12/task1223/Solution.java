@@ -2,6 +2,7 @@ package com.javarush.task.task12.task1223;
 
 /* 
 Добавь один метод в класс Cat
+Добавь один метод в класс Cat так, чтобы программа ничего не выводила на экран.
 */
 
 public class Solution {
