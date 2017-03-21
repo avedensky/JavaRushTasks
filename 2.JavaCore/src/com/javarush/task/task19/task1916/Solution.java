@@ -32,7 +32,7 @@ file1:          file2:             результат:(lines)
 
 */
 
-
+// Валидатор не принял это решение. На данных из задания работает, на других не совсем.
 public class Solution {
     public static List<LineItem> lines = new ArrayList<LineItem>();
     public static ArrayList<String> fc1 = new ArrayList<String>(50);
@@ -44,8 +44,8 @@ public class Solution {
         String file2 = conReader.readLine();*/
         conReader.close();
 
-        String file1 = "d:\\12.txt";
-        String file2 = "d:\\13.txt";
+        String file1 = "d:\\11.txt";
+        String file2 = "d:\\12.txt";
 
         BufferedReader f1 = new BufferedReader(new FileReader(file1));
         BufferedReader f2 = new BufferedReader(new FileReader(file2));
