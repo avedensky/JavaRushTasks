@@ -6,6 +6,8 @@ import java.io.*;
 Код не компилится…
 
 Программа вводит два имени файла. И копирует первый файл на место заданное вторым именем.
+
+AVedensky: Очень прикольная задача :), все исправил, но не работает :)) а оказалось...
 */
 
 public class Solution {
@@ -19,7 +21,7 @@ public class Solution {
         OutputStream fileOutputStream = getOutputStream(destinationFileName);
 
         int count = 0;
-        while (fileInputStream.available() > 0) ;
+        while (fileInputStream.available() > 0); //; - из-за этой точки с запятой игнорировалось тело цикла
         {
             int data = fileInputStream.read();
             fileOutputStream.write(data);
