@@ -1,6 +1,8 @@
 package com.javarush.task.task20.task2002;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /* 
@@ -9,6 +11,7 @@ import java.util.*;
 Реализуйте логику записи в файл и чтения из файла для класса JavaRush.
 В файле your_file_name.tmp может быть несколько объектов JavaRush.
 Метод main реализован только для вас и не участвует в тестировании.
+
 */
 public class Solution {
     public static void main(String[] args) {
@@ -33,7 +36,6 @@ public class Solution {
 
             javaRush.save(outputStream);
             outputStream.flush();
-            System.exit(0);
 
             JavaRush loadedObject = new JavaRush();
             loadedObject.load(inputStream);
@@ -56,37 +58,87 @@ public class Solution {
 
         public void save(OutputStream outputStream) throws Exception {
             //implement this method - реализуйте этот метод
-            Writer out = new OutputStreamWriter (outputStream, "UTF8");
+            DataOutputStream outToFile = new DataOutputStream(outputStream);
 
-            for (User usr : users) {
-                out.write(usr.getFirstName()+"\r\n");
-                out.write(usr.getLastName()+"\r\n");
-                out.write(usr.getBirthDate().toString()+"\r\n");
-                out.write(usr.getCountry().toString()+"\r\n");
-                out.write((usr.isMale()==true ? "male" : "female")+"\r\n");
+            outToFile.writeInt(users.size());
+            for (User user : users) {
+                /*String firstName = usr.getFirstName() != null ? usr.getFirstName() : "null";
+                String lastName = usr.getLastName() != null ? usr.getLastName() : "null";
+                String birthDate = usr.getBirthDate() != null ? dateFormat.format(usr.getBirthDate()) : "null";
+                String country = usr.getCountry() != null ? usr.getCountry().toString() : "null";
+                String sex = usr.isMale() == true ? "male" : "female";
+
+                outToFile.write(firstName + "\r\n");
+                outToFile.write(lastName + "\r\n");
+                outToFile.write(birthDate + "\r\n");
+                outToFile.write(country + "\r\n");
+                outToFile.write(usr.getCountry().toString() + "\r\n");
+                outToFile.write(sex + "\r\n");*/                
+                
+                String firstName = (user.getFirstName() == null) ? "null" : user.getFirstName();
+                outToFile.writeUTF(firstName);
+                String lastName = (user.getLastName() == null) ? "null" : user.getLastName();
+                outToFile.writeUTF(lastName);
+                outToFile.writeLong(user.getBirthDate().getTime());
+                outToFile.writeBoolean(user.isMale());
+                outToFile.writeUTF(user.getCountry().name());
             }
-            out.close();
+            outToFile.flush();
         }
 
-        public void load(InputStream inputStream) throws Exception {
-            //implement this method - реализуйте этот метод
-            BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-        }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+    public void load(InputStream inputStream) throws Exception {
+        //implement this method - реализуйте этот метод
+//        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        DataInputStream fromFile = new DataInputStream(inputStream);
+//        users.clear();
 
-            JavaRush javaRush = (JavaRush) o;
+        int usersCount = fromFile.readInt();
+        for (int i = 0; i < usersCount; i++) {
+            /*
+            String firstName = fromFile.readLine();
+            String lastName = fromFile.readLine();
+            String birthDate = fromFile.readLine();
+            String country = fromFile.readLine();
+            String sex = fromFile.readLine();
 
-            return users != null ? users.equals(javaRush.users) : javaRush.users == null;
+            User usr = new User();
+            usr.setFirstName(firstName);
+            usr.setLastName(lastName);
+            usr.setBirthDate(birthDate.equals("null") ? null :  dateFormat.parse(birthDate));
+            usr.setCountry(country.equals("null") ? null: User.Country.valueOf(country));
+            usr.setMale(sex.equals("male") ? true : false);*/
+            
+            User user = new User();
 
-        }
+            String firstName = fromFile.readUTF();
+            if (firstName.equals("null")) firstName = null;
+            user.setFirstName(firstName);
+            String lastName = fromFile.readUTF();
+            if (lastName.equals("null")) lastName = null;
+            user.setLastName(lastName);
+            user.setBirthDate(new Date(fromFile.readLong()));
+            user.setMale(fromFile.readBoolean());
+            user.setCountry(User.Country.valueOf(fromFile.readUTF()));
 
-        @Override
-        public int hashCode() {
-            return users != null ? users.hashCode() : 0;
+            users.add(user);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JavaRush javaRush = (JavaRush) o;
+
+        return users != null ? users.equals(javaRush.users) : javaRush.users == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return users != null ? users.hashCode() : 0;
+    }
+}
 }
