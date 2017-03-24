@@ -57,10 +57,7 @@ public class Solution implements Serializable {
         }
 
         private Object readResolve() throws ObjectStreamException {
-            if (ourInstance.exist == true)
-                return getInstance();
-            else
-                return this;
+            return getInstance();
         }
     }
 }
