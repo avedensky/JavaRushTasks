@@ -44,7 +44,6 @@ public class Solution implements Serializable {
 
     public static class Singleton implements Serializable {
         private static Singleton ourInstance;
-        private static final boolean exist = true;
 
         public static Singleton getInstance() {
             if (ourInstance == null) {
@@ -57,7 +56,7 @@ public class Solution implements Serializable {
         }
 
         private Object readResolve() throws ObjectStreamException {
-            return getInstance();
+                return getInstance();
         }
     }
 }
