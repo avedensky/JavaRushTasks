@@ -1,6 +1,7 @@
 package com.javarush.task.task20.task2004;
 
 import java.io.*;
+import java.util.Properties;
 
 /* 
 Читаем и пишем в файл статики
@@ -15,7 +16,7 @@ public class Solution {
         //вы можете найти your_file_name.tmp в папке TMP или исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
 
-            File your_file_name = File.createTempFile("your_file_name", null);
+            File your_file_name = new File("E:\\5.txt");//File.createTempFile("your_file_name", null);
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
@@ -36,11 +37,15 @@ public class Solution {
             outputStream.close();
             inputStream.close();
 
+            System.out.println(ClassWithStatic.staticString);
+            System.out.println(loadedObject.i);
+            System.out.println(loadedObject.j);
+
         } catch (IOException e) {
             //e.printStackTrace();
             System.out.println("Oops, something wrong with my file");
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("Oops, something wrong with save/load method");
         }
     }
@@ -52,10 +57,36 @@ public class Solution {
 
         public void save(OutputStream outputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            printWriter.println(staticString);
+            printWriter.println(i);
+            printWriter.println(j);
+            printWriter.close();
+
+            /*
+            Валидатор не принимает если делаем так:
+            Properties prop = new Properties();
+            prop.put("staticString", ClassWithStatic.staticString);
+            prop.put("i", String.valueOf(this.i));
+            prop.put("j", String.valueOf(this.j));
+            prop.store(outputStream, "");*/
         }
 
         public void load(InputStream inputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            ClassWithStatic.staticString = bufferedReader.readLine();
+            this.i = Integer.parseInt(bufferedReader.readLine());
+            this.j = Integer.parseInt(bufferedReader.readLine());
+            bufferedReader.close();
+
+
+            /*Валидатор не принимает если делаем так:
+            Properties prop = new Properties();
+            prop.load(inputStream);
+            ClassWithStatic.staticString = prop.getProperty("taticString");
+            this.i = Integer.parseInt(prop.getProperty("i"));
+            this.j = Integer.parseInt(prop.getProperty("j"));*/
         }
 
         @Override
