@@ -46,6 +46,7 @@ public class Solution {
         String qtyText = args[args.length - 1];
         String descripText = null;
 
+        //Если у нас аргументов больше 4 из-за пробелов в строке productName
         if (args.length > 4) {
             StringBuffer buf = new StringBuffer();
             for (int i = 1; i < args.length - 2; i++)
