@@ -1,4 +1,4 @@
-package com.javarush.task.task18.task1827;
+
 
 /* 
 Прайсы
@@ -31,7 +31,7 @@ id productName price quantity
 спецификатор %5.7s выводит строку длиной не менее пяти и не более семи символов.
 Если строка длиннее, конечные символы отбрасываются.
 */
-
+package com.javarush.task.task18.task1827;
 
 import java.io.*;
 import java.util.ArrayList;
