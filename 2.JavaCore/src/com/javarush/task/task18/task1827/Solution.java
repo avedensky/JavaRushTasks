@@ -40,8 +40,19 @@ import java.util.Collections;
 public class Solution {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 4)
-            return;
+        if (args.length < 4) return;
+
+        String priceText = args[args.length - 2];
+        String qtyText = args[args.length - 1];
+        String descripText = null;
+
+        if (args.length > 4) {
+            StringBuffer buf = new StringBuffer();
+            for (int i = 1; i < args.length - 2; i++)
+                buf.append(args[i]).append(" ");
+            descripText = buf.substring(0, buf.length() - 1);
+        } else
+            descripText = args[1];
 
         BufferedReader conReader = new BufferedReader(new InputStreamReader(System.in));
         String fileName = conReader.readLine();
@@ -58,14 +69,15 @@ public class Solution {
                 if (line.length() < 8)
                     continue;
 
-                lastID = Integer.parseInt(line.substring(0, 8).trim());
+                String s = line.substring(0, 8).trim();
+                lastID = Integer.parseInt(s);
                 idList.add(lastID);
 
             }
             fileReader.close();
 
             int maxID = Collections.max(idList) + 1;
-            String toFile = String.format("%n%-8d%-30.30s%-8.2f%-4d", maxID, args[1], Float.valueOf(args[2]), Integer.valueOf(args[3]));
+            String toFile = String.format("%n%-8d%-30.30s%-8.2f%-4d", maxID, descripText, Float.valueOf(priceText), Integer.valueOf(qtyText));
             PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
             printWriter.println(toFile);
             printWriter.close();
