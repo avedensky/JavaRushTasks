@@ -43,7 +43,7 @@ public class Solution {
         Map<String, ByteArrayOutputStream> archivedFiles = new HashMap<>();
         try (ZipInputStream zipReader = new ZipInputStream(new FileInputStream(zipFileName))) {
             ZipEntry entry;
-            while ((entry = zipReader.getNextEntry()) != null {
+            while ((entry = zipReader.getNextEntry()) != null) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
                 int count = 0;
