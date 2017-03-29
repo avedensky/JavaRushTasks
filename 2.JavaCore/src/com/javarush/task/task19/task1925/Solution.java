@@ -41,8 +41,6 @@ public class Solution {
 
         outText.delete(outText.length()-1,outText.length());
         fileWriter.write(outText.toString());
-
-        System.out.println(outText.toString());
         fileWriter.close();
         fileReader.close();
 
