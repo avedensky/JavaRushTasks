@@ -29,156 +29,70 @@ Info about Leela <span xml:lang=»en» lang=»en»><b><span>Turanga Leela
 text2>text1</tag>
 
 text1, text2 могут быть пустыми
-
-
-Решение в пути...
 */
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Solution {
-    //static ArrayList<Tag> tags = new ArrayList<Tag>();
-    static ArrayList<Integer> p1 = new ArrayList<>();
-    static ArrayList<Integer> p2 = new ArrayList<>();
-    static String tagOpen;
-    static String tagClose;
-
     public static void main(String[] args) throws IOException {
         BufferedReader conReader = new BufferedReader(new InputStreamReader(System.in));
-        //String fileName = conReader.readLine();
-        String fileName = "d:\\3333.txt";
+        String fileName = conReader.readLine();
         conReader.close();
-
-        StringBuffer content = new StringBuffer();
 
         //Read File
         BufferedReader fileBufReader = new BufferedReader(new FileReader(fileName));
+        StringBuffer content = new StringBuffer();
         while (fileBufReader.ready())
             content.append(fileBufReader.readLine());
         fileBufReader.close();
+        StringBuffer text = new StringBuffer(content.toString().replaceAll("\r\n", ""));
 
-        //StringBuffer text = new StringBuffer(content.toString().replaceAll("\r\n", ""));
-
-
-        StringBuffer text = new StringBuffer("<span>text<span>text2</span>text3<span>text4</span>text5</span>");
-
-        tagOpen = "<" + args[0];
-        tagClose = "</" + args[0] + ">";
+        String tagOpen = "<" + args[0];
+        String tagClose = "</" + args[0] + ">";
 
         int pozitionOpen = -1;
         int pozitionClose = -1;
-        // Type current = Type.NONE;
-
+        int shift = -1;
+        Stack<Integer> openedTags = new Stack<>();
+        Map<Integer, Integer> tags = new TreeMap<>(new MyComparator());
         while (true) {
-            pozitionOpen = text.indexOf(tagOpen, pozitionOpen + 1);
-            pozitionClose = text.indexOf(tagClose, pozitionClose + 1);
+            pozitionOpen = text.indexOf(tagOpen, shift);
+            pozitionClose = text.indexOf(tagClose, shift);
             if (pozitionOpen < 0 && pozitionClose < 0)
                 break;
 
-            if (pozitionOpen != -1) {
-                p1.add(pozitionOpen);
-                System.out.println("-Open " + text.substring(pozitionOpen, text.length()));
-                //text.delete(pozitionOpen, pozitionOpen+tagOpen.length()+1 );
+            if (pozitionOpen != -1 && pozitionOpen < pozitionClose) { //Open ближе чем close
+                openedTags.push(pozitionOpen);
+                shift = pozitionOpen + tagOpen.length();
+                continue;
             }
-            if (pozitionClose != -1) {
-                p2.add(pozitionClose);
-                System.out.println("-Close " + text.substring(pozitionOpen, text.length()));
-                //text.delete(pozitionClose, pozitionClose+tagClose.length() );
+
+            if (pozitionClose != -1 && (pozitionOpen > pozitionClose || pozitionOpen == -1)) { //Close ближе чем open
+                if (openedTags.isEmpty())
+                    break;
+                tags.put(openedTags.pop(), pozitionClose + tagClose.length());
+                shift = pozitionClose + tagClose.length();
             }
-//            System.out.println(text);
         }
 
-        /*System.out.println("p1.size():" + p1.size());
-        System.out.println("p2.size():" + p2.size());
-        System.out.println("------ p1 -------");*/
-        /*for (int i = 0; i < p1.size(); i++) {
-            System.out.println("p1[" + i + "]=" + p1.get(i));
-        }*/
-
-        System.out.println("------ p2 -------");
-        for (int i = 0, j = p2.size()-1; i < p1.size(); i++, j--) {
-            //System.out.println("p1[" + i + "]=" + p2.get(i));
-            System.out.println(p1.get(i) + " " + p2.get(j));
-            System.out.println(text.substring(p1.get(i),p2.get(j)+tagClose.length()));
+        for (Map.Entry<Integer, Integer> pair : tags.entrySet()) {
+            System.out.println(text.substring(pair.getKey(), pair.getValue()));
         }
-
-
-        /*
-        int i = 0;
-        int pozitionOpen = 0;
-        int pozitionClose = 0;
-        int pozitionNear = 0;
-        int level = 0;
-        Type last = Type.NONE;
-        Type current = Type.NONE;
-
-        while (true) {
-            pozitionOpen = text.indexOf(tagOpen);
-            pozitionClose = text.indexOf(tagClose);
-            pozitionNear = pozitionOpen < pozitionClose ? pozitionOpen : pozitionClose;
-            current = pozitionOpen < pozitionClose ? Type.OPEN : Type.CLOSE;
-
-            if (i == 0 && current == Type.CLOSE) { //Первый тэг CLOSED :-(
-                System.out.println("Ошибка в файле");
-                System.exit(0);
-            }
-
-            if (last == Type.NONE &&  current == Type.OPEN) { //Первый тэг OPEN
-
-                last = Type.OPEN;
-                Tag tag = new Tag();
-                tag.level = level;
-                tag.ready = false;
-                tag.open = true;
-                tag.close = false;
-                tag.stringOpenPosition = pozitionOpen;
-                tags.add(tag);
-            }
-
-            if (last == Type.OPEN &&  current == Type.OPEN) { //Первый тэг OPEN
-
-                last = Type.OPEN;
-                Tag tag = new Tag();
-                tag.level = level;
-                tag.ready = false;
-                tag.open = true;
-                tag.close = false;
-                tag.stringOpenPosition = pozitionOpen;
-                tags.add(tag);
-            }
-
-            if (last == Type.OPEN &&  current == Type.CLOSE) { //Первый тэг OPEN
-
-                last = Type.OPEN;
-                Tag tag = new Tag();
-                tag.level = level;
-                tag.ready = false;
-                tag.open = true;
-                tag.close = false;
-                tag.stringOpenPosition = pozitionOpen;
-                tags.add(tag);
-            }
-
-
-
-            i++;
-        }
-*/
     }
 
-    enum Type {NONE, OPEN, CLOSE}
+    static class MyComparator implements Comparator<Integer> {
 
-    static class Tag {
-        private boolean open;
-        private boolean close;
-        private int level; //Уровень вложенности, чем ваше тем больше вложенность
-        private boolean ready; //true если нашелся закрывающийся тэг
-        private int stringOpenPosition; //Открывающий тэг, позиция в общем тексте
-        private int stringClosedPosition; //Открывающий тэг, позиция в общем тексте
+        @Override
+        public int compare(Integer a, Integer b) {
+            return a.compareTo(b);
+        }
     }
 }
+
+
+
