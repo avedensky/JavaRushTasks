@@ -54,17 +54,15 @@ import java.util.TreeMap;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-
         TreeMap<String, Double> map = new TreeMap<>();
         BufferedReader fileReader = new BufferedReader(new FileReader(args[0]));
 
-        double max = 0;
+        double max = Double.MIN_VALUE;
         while (fileReader.ready()) {
             String s = fileReader.readLine();
-            String[] strs = s.split(" ");
+            String[] strs = s.split("[\\s\\t\\n\\x0B\\f\\r]");
             String key = strs[0];
             double value = Double.parseDouble(strs[1]);
-            max = value;
             if (map.containsKey(key)) {
                 map.put(key, map.get(strs[0]) + value);
             } else
@@ -79,8 +77,7 @@ public class Solution {
 
         //show
         for (Map.Entry<String, Double> pair : map.entrySet())
-            if (pair.getValue() == max)
-                System.out.print(pair.getKey()+" ");
+            if (pair.getValue().equals(max))
+                System.out.println(pair.getKey());
     }
-
 }
