@@ -41,7 +41,7 @@ public class Solution {
         } catch (Exception e) {
             return new String();
         }
-            
+
         return res.toString();
     }
 
