@@ -1,7 +1,7 @@
 package com.javarush.task.task22.task2213;
 
 /**
- * Класс FigureFactory отвечает за создание объектов-фигурок.
+ * Клсс FigureFactory отвечает за создание объектов-фигурок.
  */
 public class FigureFactory {
     /**
