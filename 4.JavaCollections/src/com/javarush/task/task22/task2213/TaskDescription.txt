@@ -192,3 +192,19 @@ landed() — вызывается, когда фигурка достигла д
 7. В классе Figure должен быть создан метод isCurrentPositionAvailable без параметров.
 8. В классе Figure должен быть создан метод landed без параметров.
 9. Метод isCurrentPositionAvailable должен возвращать true.
+
+
+---------------
+Тетрис(11)
+Теперь создай класс FigureFactory.
+С его помощью мы будем создавать фигуры различных форм.
+Пока он будет содержать только один статический метод createRandomFigure:
+static Figure createRandomFigure(int x,int y)
+
+
+Требования:
+1. Класс FigureFactory должен быть создан в отдельном файле.
+2. В классе FigureFactory должен быть создан метод createRandomFigure с двумя параметрами типа int.
+3. Метод createRandomFigure должен быть статическим.
+4. Должна существовать возможность получить доступ к методу createRandomFigure извне класса FigureFactory.
+5. Метод createRandomFigure должен иметь тип возвращаемого значения Figure.
