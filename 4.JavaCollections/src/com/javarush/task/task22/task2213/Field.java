@@ -12,7 +12,7 @@ public class Field {
     public Field(int width, int height) {
         this.width = width;
         this.height = height;
-        this.matrix = new int [height][width];
+        this.matrix = new int[height][width];
     }
 
     public int getWidth() {
@@ -37,11 +37,20 @@ public class Field {
 
     //объект будет отрисовывать на экран свое текущее состояние
     public void print() {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++)
+                if (matrix[y][x] == 0)
+                    System.out.print(".");
+                else
+                    System.out.print("X");
+
+            System.out.println();
+        }
 
     }
 
     //будет удалять из матрицы полностью заполненные строки и сдвигать вышележащие строки вниз
-    public void removeFullLines () {
+    public void removeFullLines() {
 
     }
 
