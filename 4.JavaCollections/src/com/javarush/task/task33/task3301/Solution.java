@@ -53,26 +53,27 @@ public class Solution {
         mapper.writeValue(writer, object);
     }
 
-    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property="type")
+    /*@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property="type")
     @JsonSubTypes({
             @JsonSubTypes.Type(value=Cat.class, name="cat"),
             @JsonSubTypes.Type(value=Dog.class, name="dog")
-    })
+    })*/
+    @JsonAutoDetect
     public static class Pet {
         public String name;
         Pet () {}
     }
 
-//    @JsonAutoDetect
+    @JsonAutoDetect
     public static class Cat extends Pet {
         Cat (){}
         public int age;
         public int weight;
     }
 
-//    @JsonAutoDetect
+    @JsonAutoDetect
     public static class Dog extends Pet {
-        int age;
+        public int age;
         public String owner;
         public Dog () {}
     }
