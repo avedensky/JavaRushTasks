@@ -10,7 +10,7 @@ import com.javarush.task.task33.task3305.RaceBike;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property="type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Zoo.Dog.class, name = "dog"),
         @JsonSubTypes.Type(value = Zoo.Cat.class, name = "cat"),

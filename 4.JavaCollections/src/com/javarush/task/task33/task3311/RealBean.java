@@ -33,7 +33,7 @@ public class RealBean {
     }
 
 
-    @JsonDeserialize(as=HashMap.class, keyAs=String.class, contentAs=Object.class)
+    @JsonAnyGetter
     public Map<String, Object> getAdditionalMap() {
         return additionalMap;
     }
