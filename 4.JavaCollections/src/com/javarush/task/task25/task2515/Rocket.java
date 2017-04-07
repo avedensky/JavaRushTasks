@@ -1,16 +1,16 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * Created by Alexey Vedensky on 07.04.2017.
- * MAIL: avedensky@gmail.com
+ * Класс для объектов-ракета
  */
 public class Rocket extends BaseObject {
+
     public Rocket(double x, double y) {
         super(x, y, 1);
     }
 
     /**
-     * Отрисовываем себя на холсте.
+     * Метод рисует свой объект на "канвасе".
      */
     @Override
     public void draw(Canvas canvas) {
@@ -18,7 +18,7 @@ public class Rocket extends BaseObject {
     }
 
     /**
-     * Двигаем себя вниз на один ход.
+     * Двигаем себя вверх на один ход.
      */
     @Override
     public void move() {
