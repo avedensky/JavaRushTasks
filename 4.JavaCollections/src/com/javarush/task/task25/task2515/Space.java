@@ -7,6 +7,8 @@ import java.util.ArrayList;
  * MAIL: avedensky@gmail.com
  */
 public class Space {
+    public static Space game;
+
     private int width, height;
     private SpaceShip ship;
     private ArrayList<Ufo> ufos;
