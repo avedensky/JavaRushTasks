@@ -34,17 +34,6 @@ public class Canvas {
         matrix[(int) Math.round(y)][(int) Math.round(x)] = c;
     }
 
-
-    /*
-Второй метод — drawMatrix копирует переданную ему картинку (матрицу) в матрицу Canvas.
-И не просто копирует, а начиная с координат x, y.
-
-В методе надо:
-а) с помощью двух вложенных циклов пройтись по всем ячейкам переданной картинки,
-б) если значение ячейки matrix[i][j] не равно 0, то покрасить в матрице объекта Canvas точку (x+j, y+i) в цвет c:
-setPoint(x+j, y+i, c)
-     */
-
     public void drawMatrix(double x, double y, int[][] matrix, char c) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -52,5 +41,21 @@ setPoint(x+j, y+i, c)
                     setPoint(x + j, y + i, c);
             }
         }
+    }
+
+    public void clear () {
+        for (int i = 0; i < matrix.length; i++)
+            for (int j = 0; j < matrix[0].length; j++)
+                matrix[i][j] = 0;
+    }
+
+    public void print () {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++)
+                System.out.println(matrix[i][j]);
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
     }
 }
