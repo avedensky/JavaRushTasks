@@ -1,11 +1,15 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * Created by Alexey Vedensky on 07.04.2017.
- * MAIL: avedensky@gmail.com
+ * Базовый класс для всех объектов игры.
  */
 public abstract class BaseObject {
-    private double x,y,radius;
+    //координаты
+    protected double x;
+    protected double y;
+    //радиус объекта
+    protected double radius;
+    //состояние объект - жив ли объект
     private boolean isAlive;
 
     public BaseObject(double x, double y, double radius) {
@@ -39,28 +43,50 @@ public abstract class BaseObject {
         this.radius = radius;
     }
 
+    /**
+     * Метод рисует свой объект на "канвасе".
+     */
+    public void draw(Canvas canvas) {
+        //do nothing
+    }
+
+    /**
+     * Двигаем себя на один ход.
+     */
+    public void move() {
+        //do nothing
+    }
+
+    /**
+     * Проверяем - не выходит ли (x,y) за границы.
+     */
+    public void checkBorders(double minx, double maxx, double miny, double maxy) {
+        if (x < minx) x = minx;
+        if (x > maxx) x = maxx;
+        if (y < miny) y = miny;
+        if (y > maxy) y = maxy;
+    }
+
     public boolean isAlive() {
         return isAlive;
     }
 
-    public void draw () {
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 
-    public void move () {
-
-    }
-
-    public void die () {
+    public void die() {
         isAlive = false;
     }
 
+    /**
+     * Проверяем - пересекаются ли переданный(o) и наш(this) объекты.
+     */
     public boolean isIntersect(BaseObject o) {
-        //дистанция_между_объектами < max (радиус_первого_объекта, радиус_второго_объекта).
-
-        double deltaX = x - o.x;
-        double deltaY = y - o.y;
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        return distance <= Math.max (radius, o.getRadius());
+        double dx = x - o.x;
+        double dy = y - o.y;
+        double destination = Math.sqrt(dx * dx + dy * dy);
+        double destination2 = Math.max(radius, o.radius);
+        return destination <= destination2;
     }
 }
