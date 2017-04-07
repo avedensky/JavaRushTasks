@@ -4,5 +4,5 @@ package com.javarush.task.task25.task2515;
  * Created by Alexey Vedensky on 07.04.2017.
  * MAIL: avedensky@gmail.com
  */
-public class SpaceShip extends BaseObject{
+public class Rocket extends BaseObject {
 }

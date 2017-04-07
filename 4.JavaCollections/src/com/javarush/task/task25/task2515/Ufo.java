@@ -20,5 +20,5 @@ package com.javarush.task.task25.task2515;
 2. Создай в отдельном файле класс SpaceShip.
 3. Создай в отдельном файле класс Ufo.
 4. Добавь метод main в класс Space.*/
-public class Ufo {
+public class Ufo extends BaseObject{
 }
