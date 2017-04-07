@@ -21,4 +21,7 @@ package com.javarush.task.task25.task2515;
 3. Создай в отдельном файле класс Ufo.
 4. Добавь метод main в класс Space.*/
 public class Ufo extends BaseObject{
+    public Ufo(double x, double y, double radius) {
+        super(x, y, radius);
+    }
 }

@@ -5,4 +5,7 @@ package com.javarush.task.task25.task2515;
  * MAIL: avedensky@gmail.com
  */
 public class Bomb extends BaseObject {
+    public Bomb(double x, double y, double radius) {
+        super(x, y, radius);
+    }
 }
