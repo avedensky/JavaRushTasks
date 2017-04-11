@@ -2,27 +2,32 @@ package com.javarush.task.task20.task2028;
 
 import java.io.Serializable;
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 
 /* 
-Построй дерево(1)
-Амиго, похоже ты уже достаточно окреп. Самое время проверить свои навыки в большой задаче!
-Сегодня реализуем свое дерево немного нестандартным способом(на базе AbstractList).
-Вводную информацию можешь получить используя свой любимый поисковик и текст ниже.
+Несмотря на то что наше дерево является потомком класса AbstractList, это не список в привычном понимании.
+В частности нам недоступны принимающие в качестве параметра индекс элемента.
+Такие методы необходимо переопределить и бросить новое исключение типа UnsupportedOperationException.
 
-Элементы дерева должны следовать так как показано на картинке:
-http://info.javarush.ru/uploads/images/00/04/89/2014/03/21/ee9a9b.jpg
-
-Для начала сделаем наше дерево потомком класса AbstractList с параметром типа String, а также
-реализуем интерфейсы Cloneable и Serializable.
-
-Реализацию методов get(int index) и size() пока оставь стандартной.
+Вот их список:
+public String get(int index)
+public String set(int index, String element)
+public void add(int index, String element)
+public String remove(int index)
+public List<String> subList(int fromIndex, int toIndex)
+protected void removeRange(int fromIndex, int toIndex)
+public boolean addAll(int index, Collection<? extends String> c)
 
 
 Требования:
-1. Класс CustomTree должен поддерживать интерфейс Cloneable.
-2. Класс CustomTree должен поддерживать интерфейс Serializable.
-3. Класс CustomTree должен быть потомком класса AbstractList.
+1. При попытке вызвать метод get(int index) должно возникать исключение типа UnsupportedOperationException.
+2. При попытке вызвать метод set(int index, String element) должно возникать исключение типа UnsupportedOperationException.
+3. При попытке вызвать метод add(int index, String element) должно возникать исключение типа UnsupportedOperationException.
+4. При попытке вызвать метод String remove(int index) должно возникать исключение типа UnsupportedOperationException.
+5. При попытке вызвать метод subList(int fromIndex, int toIndex) должно возникать исключение типа UnsupportedOperationException.
+6. При попытке вызвать метод removeRange(int fromIndex, int toIndex) должно возникать исключение типа UnsupportedOperationException.
+7. При попытке вызвать метод addAll(int index, Collection c) должно возникать исключение типа UnsupportedOperationException.
 */
 public class CustomTree extends AbstractList implements Cloneable, Serializable {
     public static void main(String[] args) {
@@ -36,12 +41,43 @@ public class CustomTree extends AbstractList implements Cloneable, Serializable 
     }
 
     @Override
-    public Object get(int index) {
-        return null;
+    public int size() {
+        return 0;
+    }
+
+
+    public String get(int index) {
+        throw new UnsupportedOperationException();
+        //return null;
+    }
+
+    public String set(int index, String element) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void add(int index, String element) {
+        throw new UnsupportedOperationException();
+    }
+
+    public String remove(int index) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public int size() {
-        return 0;
+    public boolean addAll(int index, Collection c) {
+        throw new UnsupportedOperationException();
+        //return super.addAll(index, c);
+    }
+
+    @Override
+    public List subList(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException();
+        //return super.subList(fromIndex, toIndex);
+    }
+
+    @Override
+    protected void removeRange(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException();
+        //super.removeRange(fromIndex, toIndex);
     }
 }
