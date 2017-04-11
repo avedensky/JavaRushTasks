@@ -35,32 +35,32 @@ public class Solution {
         //ArrayList<Integer> tst = newArrayList (new Integer(10), new Integer(20));
     }
 
-    public static <T> ArrayList<T> newArrayList(Object... elements) {
+    public static <T> ArrayList<T> newArrayList(T... elements) {
         //напишите тут ваш код
         ArrayList<T> res = new ArrayList<>();
-        for (Object elm : elements)
-            res.add((T) elm);
+        for (T elm : elements)
+            res.add(elm);
 
         return res;
     }
 
-    public static <T> HashSet<T> newHashSet(Object... elements) {
+    public static <T> HashSet<T> newHashSet(T... elements) {
         //напишите тут ваш код
         HashSet<T> res = new HashSet<>();
-        for (Object elm : elements)
-            res.add((T) elm);
+        for (T elm : elements)
+            res.add(elm);
 
         return res;
     }
 
-    public static <K,V> HashMap<K,V> newHashMap(List keys, List values) {
+    public static <K, V> HashMap<K, V> newHashMap(List<? extends K> keys, List<? extends V> values) {
         //напишите тут ваш код
-        if (keys.size()!=values.size())
+        if (keys.size() != values.size())
             throw new IllegalArgumentException();
 
-        HashMap<K,V> res = new HashMap<>();
-        for (int i=0;i<keys.size();i++) {
-            res.put((K) keys.get(i), (V) values.get(i));
+        HashMap<K, V> res = new HashMap<>();
+        for (int i = 0; i < keys.size(); i++) {
+            res.put(keys.get(i), values.get(i));
         }
 
         return res;

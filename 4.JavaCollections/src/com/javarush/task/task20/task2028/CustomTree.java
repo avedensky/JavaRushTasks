@@ -6,41 +6,28 @@ import java.util.Collection;
 import java.util.List;
 
 /* 
-Класс описывающий дерево мы создали, теперь нужен класс описывающий тип элементов дерева:
-1.  В классе CustomTree создай вложенный статический параметризированный класс Entry<T> с модификатором доступа
- по умолчанию.
-2. Обеспечь поддержку этим классом интерфейса Serializable.
-3. Создай такие поля (модификатор доступа по умолчанию):
-— String elementName;
-— int lineNumber;
-— boolean availableToAddLeftChildren, availableToAddRightChildren;
-— Entry<T> parent, leftChild, rightChild;
-4. Реализуй публичный конструктор с одним параметром типа String:
-— установи поле elementName равным полученному параметру;
-— установи поле availableToAddLeftChildren равным true;
-— установи поле availableToAddRightChildren равным true;
-5. Реализуй метод void checkChildren, устанавливающий поле availableToAddLeftChildren в false,
- если leftChild не равен null и availableToAddRightChildren в false, если rightChild не равен null.
-6. Реализуй метод boolean isAvailableToAddChildren, возвращающий дизъюнкцию полей availableToAddLeftChildren
- и availableToAddRightChildren.
+Итак, основа дерева создана, пора тебе поработать немного самому.
+Вспомним как должно выглядеть наше дерево.
 
-Любое дерево начинается с корня, поэтому не забудь в класс CustomTree добавить поле root типа Entry<String>
- c модификатором доступа по умолчанию.
+Элементы дерева должны следовать так как показано на картинке:
+http://info.javarush.ru/uploads/images/00/04/89/2014/03/21/ee9a9b.jpg
+
+Необходимо написать методы, которые бы позволили создать такую структуру дерева и проводить операции над ней.
+
+Тебе необходимо реализовать:
+1. метод add(String s) — добавляет элементы дерева, в качестве параметра принимает имя элемента (elementName),
+ искать место для вставки начинаем слева направо.
+2. метод remove(String s) — удаляет элемент дерева имя которого было полученного в качестве параметра.
+3. метод size() — возвращает текущее количество элементов в дереве.
+4. метод getParent(String s) — возвращает имя родителя элемента дерева, имя которого было полученного в качестве параметра.
 
 
 Требования:
-1. Класс CustomTree.Entry должен быть объявлен с модификатором доступа по умолчанию.
-2. Класс CustomTree.Entry должен поддерживать интерфейс Serializable.
-3. В классе CustomTree.Entry должно существовать поле elementName типа String.
-4. В классе CustomTree.Entry должно существовать поле lineNumber типа int.
-5. В классе CustomTree.Entry должно существовать поле availableToAddLeftChildren типа boolean.
-6. В классе CustomTree.Entry должно существовать поле availableToAddRightChildren типа boolean.
-7. В классе CustomTree.Entry должно существовать поле parent типа Entry.
-8. В классе CustomTree.Entry должно существовать поле leftChild типа Entry.
-9. В классе CustomTree.Entry должно существовать поле rightChild типа Entry.
-10. В классе CustomTree.Entry должен быть корректно реализован конструктор с одним параметром типа String (смотри условие).
-11. В классе CustomTree.Entry должен корректно реализован метод checkChildren (смотри условие).
-12. В классе CustomTree.Entry должен корректно реализован метод isAvailableToAddChildren (смотри условие).
+1. После добавления N элементов в дерево с помощью метода add, метод size должен возвращать N.
+2. После удаления последнего добавленного элемента из дерева с помощью метода remove, метод size должен возвращать N-1.
+3. После удаления второго элемента добавленного в дерево, метод size должен возвращать N/2 + 1
+ (для случаев где N > 2 и является степенью двойки), N - размер дерева до удаления.
+4. Метод getParent должен возвращать имя родителя для любого элемента дерева.
 */
 public class CustomTree extends AbstractList implements Cloneable, Serializable {
     Entry<String> root;
