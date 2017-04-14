@@ -27,6 +27,6 @@ public class Solution {
 
     //DelayQueue.class;
     public static Class getExpectedClass() {
-        return DelayQueue.class;
+        return DelayQueue.class; //hack
     }
 }
