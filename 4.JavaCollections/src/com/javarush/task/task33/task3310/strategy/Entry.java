@@ -30,7 +30,7 @@ public class Entry implements Serializable {
 
     @Override
     public int hashCode() {
-        return (key   == null ? 0 :   key.hashCode()) ^ (value == null ? 0 : value.hashCode());
+        return (key == null ? 0 : key.hashCode()) ^ (value == null ? 0 : value.hashCode());
     }
 
     @Override
@@ -50,8 +50,9 @@ public class Entry implements Serializable {
 
         return false;
     }
+
     @Override
     public String toString() {
-        return new String (key + "=" + value);
+        return new String(key + "=" + value);
     }
 }

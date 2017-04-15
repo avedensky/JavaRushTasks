@@ -72,7 +72,7 @@ public class FileBucket {
 
         try (ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(path))) {
             entry = (Entry) objectInputStream.readObject();
-        } catch (IOException  e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
