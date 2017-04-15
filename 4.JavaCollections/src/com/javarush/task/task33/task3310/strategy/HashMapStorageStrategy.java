@@ -8,7 +8,7 @@ import java.util.Map;
  * MAIL: avedensky@gmail.com
  */
 public class HashMapStorageStrategy implements StorageStrategy {
-    private HashMap<Long, String> data;
+    private HashMap<Long, String> data = new HashMap<>();;
 
     @Override
     public boolean containsKey(Long key) {
