@@ -31,22 +31,17 @@ id productName price quantity
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+
+//Принято
 public class Solution {
-    private static final int ID_LEN = 8;
-    private static final int PRODUCT_NAME_LEN = 30;
-    private static final int PRICE_LEN = 8;
-    private static final int QUANTITY_LEN = 4;
-
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String fileName = reader.readLine();
         reader.close();
-
-        StringBuffer argsAsString = new StringBuffer();
-        for (int i = 1; i < args.length; i++) {
-            argsAsString.append(args[i]+" ");
-        }
 
         ArrayList<String> products = new ArrayList<>();
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
@@ -54,28 +49,51 @@ public class Solution {
             products.add(fileReader.readLine());
         fileReader.close();
 
-
         switch (args[0]) {
             case "-u": {
-                int startPos = 0;
-                String id = argsAsString.substring(startPos,ID_LEN);
-                startPos += ID_LEN;
-                String productName = argsAsString.substring(startPos,startPos+PRODUCT_NAME_LEN-1);
-                startPos += PRODUCT_NAME_LEN-1;
-                String price = argsAsString.substring(startPos,startPos+PRICE_LEN);
-                startPos += PRICE_LEN;
-                String quantity = argsAsString.substring(startPos,startPos+QUANTITY_LEN);
+                if (args.length < 5)
+                    return;
 
-                for (int i = 0; i < products.size(); i++)
-                    if (products.get(i).startsWith(id)) {
-                        StringBuffer sb = new StringBuffer();
-                        sb.append(makeField(id, ID_LEN));
-                        sb.append(makeField(productName, PRODUCT_NAME_LEN));
-                        sb.append(makeField(price, PRICE_LEN));
-                        sb.append(makeField(quantity, QUANTITY_LEN));
-                        products.set(i, new String(sb));
-                        break;
+                float price;
+                int qty;
+                int idFromCommand = 0;
+                
+                //Если что-то передали не то
+                try {
+                    price = Float.parseFloat(args[args.length - 2]);
+                    qty = Integer.parseInt(args[args.length - 1]);
+                    idFromCommand = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    return;
+                }
+
+                //Если у нас аргументов больше 4, из-за пробелов в строке productName
+                String productName;
+                if (args.length > 5) {
+                    StringBuffer buf = new StringBuffer();
+                    for (int i = 2; i < args.length - 2; i++)
+                        buf.append(args[i]).append(" ");
+                    productName = buf.substring(0, buf.length() - 1);
+                } else
+                    productName = args[2];
+
+                //Get ID from line and update
+                Pattern p = Pattern.compile("([0-9]{1,8})");
+                for (int i = 0; i < products.size(); i++) {
+                    String s = products.get(i);
+                    Matcher m = p.matcher(s);
+                    if (m.lookingAt()) {
+                        try {
+                            int id = Integer.parseInt(s.substring(m.start(), m.end()));
+                            if (id == idFromCommand) {
+                                products.set(i, String.format(Locale.ROOT, "%-8d%-30s%-8.2f%-4d", id, productName, price, qty));
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            continue;
+                        }
                     }
+                }
                 break;
             }
 
@@ -91,17 +109,8 @@ public class Solution {
         }
 
         PrintWriter fileWriter = new PrintWriter(fileName);
-        //PrintWriter fileWriter = new PrintWriter("d:\\prod3.txt");
         for (String s : products)
             fileWriter.println(s);
         fileWriter.close();
-    }
-
-    private static StringBuffer makeField(String s, int fieldLenght) {
-        StringBuffer sb = new StringBuffer(s);
-        for (int i = sb.length(); i < fieldLenght; i++)
-            sb.append(" ");
-
-        return sb;
     }
 }
