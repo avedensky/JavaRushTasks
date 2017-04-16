@@ -75,7 +75,6 @@ public class Solution<T> extends ArrayList<T> {
         public void forEachRemaining(Consumer<? super T> action) {
             iterator.forEachRemaining(action);
         }
-
     }
 
 
