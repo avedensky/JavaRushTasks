@@ -57,7 +57,7 @@ public class Solution {
                 float price;
                 int qty;
                 int idFromCommand = 0;
-                
+
                 //Если что-то передали не то
                 try {
                     price = Float.parseFloat(args[args.length - 2]);
