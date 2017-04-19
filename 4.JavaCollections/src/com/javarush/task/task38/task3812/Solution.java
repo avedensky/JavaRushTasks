@@ -23,7 +23,7 @@ PrepareMyTest, необходимо вывести на экран fullyQualifie
 возвращать true, если полученный класс отмечен аннотацией @PrepareMyTest.
 */
 
-import java.lang.annotation.Annotation;
+//import java.lang.annotation.Annotation;
 
 public class Solution {
     public static void main(String[] args) {
