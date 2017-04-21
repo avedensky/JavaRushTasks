@@ -29,7 +29,6 @@ public class Solution {
         System.out.println(isOneEditAway("mama", "dama")); //true
         System.out.println(isOneEditAway("ama", "mama"));  //true
         System.out.println(isOneEditAway("mama", "ama")); //true
-
     }
 
     public static boolean isOneEditAway(String first, String second) {
@@ -46,8 +45,6 @@ public class Solution {
         if(first.equals(second))
             return true; //Странно это... Т.к. по условию задачи, True - только когда возможно изменение... Но валидатору виднее
 
-
-
         StringBuffer s1 = (first.length() >= second.length()) ? new StringBuffer(first) : new StringBuffer(second);
         StringBuffer s2 = (first.length() < second.length()) ? new StringBuffer(first) : new StringBuffer(second);
 
@@ -57,8 +54,6 @@ public class Solution {
                 s1.deleteCharAt(pos);
         }
 
-//        System.out.println(s1);
-//        System.out.println(s2);
         if (s1.length() == 1)
             return true;
 
