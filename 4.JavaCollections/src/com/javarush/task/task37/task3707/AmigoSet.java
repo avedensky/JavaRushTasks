@@ -3,14 +3,26 @@ package com.javarush.task.task37.task3707;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * Created by Alexey on 20.04.2017.
- */
+//Валидатор не пропускает
+public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Cloneable, Serializable {
 
-public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializable, Set<E>  {
+    private static final Object PRESENT = new Object();
+    private transient HashMap<E, Object> map;
 
     public AmigoSet() {
+        map = new HashMap<>();
     }
+
+    public AmigoSet(int capacity) {
+        map = new HashMap<>(capacity);
+    }
+
+
+    public AmigoSet(Collection<? extends E> c) {
+        map = new HashMap<>(Math.max((int) (c.size() / .75f) + 1, 16));
+        addAll(c);
+    }
+
 
     @Override
     public Spliterator spliterator() {
@@ -48,8 +60,8 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
     }
 
     @Override
-    public boolean add(Object o) {
-        return false;
+    public boolean add(E e) {
+        return map.put(e, PRESENT) == null;
     }
 
     @Override
@@ -82,3 +94,4 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
 
     }
 }
+
