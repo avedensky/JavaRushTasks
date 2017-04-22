@@ -18,5 +18,12 @@ public class Provider {
         this.strategy = strategy;
     }
 
-    public List<Vacancy> getJavaVacancies(String searchString) {return null;}
+    public List<Vacancy> getJavaVacancies(String searchString)
+    {
+        try {
+            return strategy.getVacancies(searchString);
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
 }
