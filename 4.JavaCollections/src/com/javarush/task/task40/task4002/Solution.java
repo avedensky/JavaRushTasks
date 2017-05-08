@@ -32,27 +32,6 @@ import java.util.List;
 4. Метод sendPost должен использовать метод getHttpClient для получения HttpClient.
 */
 
-//Валидатор говорит след:В OutputStream соединения должны быть записаны переданные в метод sendPost параметры.
-
-// В условии задачи нигде не говорится о том, что здесь используем Apache HttpComponents
-// Методом гугления, нашел, что надо скачать и подключить:
-// http://hc.apache.org/downloads.cgi
-// Однако, в условии задачи требуется - см 3 пункт. Но записать можно только через внутр объект реквеста Entity.
-//
-// И да у Entity есть два метода writeTo (OutputStream) и getContent возвращающий InputStream, но как я понимаю они
-// предназначены для получения значений request, а не для записи. А Чтобы записать параметры в request есть
-// метод setEntity и в него можно положить объект реализующий Interface HttpEntity.
-// Объекты этих классов можно класть в setEntity:
-// AbstractHttpEntity, BasicHttpEntity, BufferedHttpEntity, ByteArrayEntity,
-// EntityTemplate, FileEntity, HttpEntityWrapper, InputStreamEntity, SerializableEntity, StringEntity
-
-//Т.е. в упор не видно OutputStream
-
-//Или тут речь идет о получении данных после выполнения запроса.Т.е. записать в OutputStream полученные данные после
-//отсылки Поста. Или реализовать свой OutputStream Entity. Вообщем не ясно.
-
-
-
 public class Solution {
     public static void main(String[] args) throws Exception {
         Solution solution = new Solution();
@@ -61,39 +40,21 @@ public class Solution {
     }
 
     public void sendPost(String url, String urlParameters) throws Exception {
-        // Create the request
+        HttpClient client = getHttpClient();
         HttpPost request = new HttpPost(url);
         request.addHeader("User-Agent", "Mozilla/5.0");
 
-        //Parse param from urlParameters
-        String[] paramPairs = urlParameters.split("&");
-        if (paramPairs.length>0) {
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            for (String s : paramPairs) {
-                String[] pair = s.split("=");
-
-                if (pair.length == 2) {
-                    String name = pair[0];
-                    String value = pair[1];
-                    nameValuePairs.add(new BasicNameValuePair(name, value));
-                }
-            }
-            request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
+        String[] s = urlParameters.split("&");
+        for (int i = 0; i < s.length; i++) {
+            String g = s[i];
+            valuePairs.add(new BasicNameValuePair(g.substring(0,g.indexOf("=")), g.substring(g.indexOf("=")+1)));
         }
 
-        //For test
-        OutputStream outstream = new ByteArrayOutputStream();
-        HttpEntity entity = request.getEntity();
-        request.getEntity().writeTo(outstream);
-        outstream.close();
-        //System.out.println(outstream.toString());
-
-        //Send request
-        HttpClient client = getHttpClient();
+        request.setEntity(new UrlEncodedFormEntity(valuePairs));
         HttpResponse response = client.execute(request);
         System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
 
-        //Get Content from response
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
         StringBuffer result = new StringBuffer();
         String responseLine;
