@@ -1,7 +1,6 @@
 package com.javarush.task.task39.task3904;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 /* 
 Лестница
@@ -20,32 +19,30 @@ P.S. Если лестница состоит из 0 ступенек — мет
 3. Метод countPossibleRunups должен возвращать 0 для n < 0.
 4. Время выполнения метода countPossibleRunups должно быть линейным.
 */
-
-//Валидацию не прошло
 public class Solution {
     private static int n = 70;
+    static HashMap<Integer, Long> map = new HashMap<>();
+    static {
+        map.put(0, 1L);
+        map.put(1, 1L);
+        map.put(2, 2L);
+        map.put(3, 4L);
+    }
 
     public static void main(String[] args) {
         System.out.println("Number of possible runups for " + n + " stairs is: " + countPossibleRunups(n));
     }
 
     public static long countPossibleRunups(int n) {
-        if (n == 0) return 1;
-        if (n < 0) return 0;
+        if (n < 0)
+            return 0;
 
-        ArrayList<Integer> values = new ArrayList<>();
-        values.add(1); //1
-        values.add(2);
-        values.add(3);
-
-        int i;
-        for (i = 3; i <= n; i++) {
-            values.add(values.get(i - 1) + values.get(i - 2) + values.get(i - 3));
-            //System.out.println(values.get(i));
+        if (map.containsKey(n)) {
+            return map.get(n);
+        } else {
+            long fibonacciValue = ((countPossibleRunups(n - 3) + countPossibleRunups(n - 2))  + countPossibleRunups(n - 1));
+            map.put(n, fibonacciValue);
+            return fibonacciValue;
         }
-
-        return values.get(values.size()-1);
-
     }
 }
-
