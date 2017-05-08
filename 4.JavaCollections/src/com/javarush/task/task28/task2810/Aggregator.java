@@ -2,6 +2,7 @@ package com.javarush.task.task28.task2810;
 
 import com.javarush.task.task28.task2810.model.Provider;
 
+
 /**
  * Created by Alexey on 21.04.2017.
  */
@@ -13,6 +14,6 @@ public class Aggregator {
             Provider provider = new Provider(null);
             Controller controller = new Controller(provider);
             controller.scan();
-            //System.out.println(controller);
+//            System.out.println(controller);
     }
 }

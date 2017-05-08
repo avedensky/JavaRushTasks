@@ -8,6 +8,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,29 +65,32 @@ public class HHStrategy implements Strategy {
 
     @Override
     public List<Vacancy> getVacancies(String searchString) {
-        List<Vacancy> list = new ArrayList<>();
+        //List<Vacancy> list = new ArrayList<>();
+        return Collections.emptyList();
 
-        int page = 1;
-        while (true) {
-            try {
-                Document doc = getDocument(searchString, page++);
-                Elements all = doc.getElementsByClass("job");
-                if (!all.isEmpty()) {
-                    for (Element e : all) {
-                        Vacancy vacancy = new Vacancy();
-                        vacancy.setSiteName(doc.title());
-                        vacancy.setSalary(e.getElementsByClass("salary").first().getElementsByAttributeValue("title", "Зарплата").text());
-                        vacancy.setTitle(e.getElementsByClass("info").first().getElementsByAttribute("title").text());
-                        vacancy.setUrl("https://moikrug.ru" + e.getElementsByClass("title").first().getElementsByTag("a").attr("href"));
-                        vacancy.setCity(e.getElementsByClass("location").text());
-                        vacancy.setCompanyName(e.getElementsByClass("company_name").first().getElementsByTag("a").text());
-                        list.add(vacancy);
-                    }
-                }
-            } catch (Exception ignored) {}
-            break;
-        }
-        return list;
+//        int page = 1;
+//        while (true) {
+//            try {
+//                Document doc = getDocument(searchString, page++);
+//                Elements all = doc.getElementsByClass("job");
+//                if (!all.isEmpty()) {
+//                    for (Element e : all) {
+//                        Vacancy vacancy = new Vacancy();
+//                        vacancy.setSiteName(doc.title());
+//                        vacancy.setSalary(e.getElementsByClass("salary").first().getElementsByAttributeValue("title", "Зарплата").text());
+//                        vacancy.setTitle(e.getElementsByClass("info").first().getElementsByAttribute("title").text());
+//                        vacancy.setUrl("https://moikrug.ru" + e.getElementsByClass("title").first().getElementsByTag("a").attr("href"));
+//                        vacancy.setCity(e.getElementsByClass("location").text());
+//                        vacancy.setCompanyName(e.getElementsByClass("company_name").first().getElementsByTag("a").text());
+//                        list.add(vacancy);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                return Collections.emptyList();
+//            }
+//            break;
+//        }
+
 
 
     }
