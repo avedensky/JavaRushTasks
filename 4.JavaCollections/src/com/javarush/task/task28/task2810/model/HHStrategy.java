@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+
+
 /**
  * Created by Alexey on 21.04.2017.
  */
@@ -62,47 +64,18 @@ Ctrl+Alt+V(Variable) — создание переменных.
 
 public class HHStrategy implements Strategy {
     private static final String URL_FORMAT = "http://hh.ua/search/vacancy?text=java+%s&page=%d";
+    String userAgent = "Mozilla/5.0";
+    String referrer = "http://google.ru";
 
     @Override
-    public List<Vacancy> getVacancies(String searchString) {
-        //List<Vacancy> list = new ArrayList<>();
-        return Collections.emptyList();
-
-//        int page = 1;
-//        while (true) {
-//            try {
-//                Document doc = getDocument(searchString, page++);
-//                Elements all = doc.getElementsByClass("job");
-//                if (!all.isEmpty()) {
-//                    for (Element e : all) {
-//                        Vacancy vacancy = new Vacancy();
-//                        vacancy.setSiteName(doc.title());
-//                        vacancy.setSalary(e.getElementsByClass("salary").first().getElementsByAttributeValue("title", "Зарплата").text());
-//                        vacancy.setTitle(e.getElementsByClass("info").first().getElementsByAttribute("title").text());
-//                        vacancy.setUrl("https://moikrug.ru" + e.getElementsByClass("title").first().getElementsByTag("a").attr("href"));
-//                        vacancy.setCity(e.getElementsByClass("location").text());
-//                        vacancy.setCompanyName(e.getElementsByClass("company_name").first().getElementsByTag("a").text());
-//                        list.add(vacancy);
-//                    }
-//                }
-//            } catch (Exception e) {
-//                return Collections.emptyList();
-//            }
-//            break;
-//        }
-
-
-
-    }
-
-    protected Document getDocument(String searchString, int page) throws IOException
-    {
-        String url = String.format(URL_FORMAT, searchString, page);
-        Document document = Jsoup.connect(url)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("none")
-                .get();
-
-        return document;
+    public List<Vacancy> getVacancies(String searchString){
+        List<Vacancy> list = new ArrayList<>();
+        int page = 1;
+        try {
+            Document document = Jsoup.connect(URL_FORMAT).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

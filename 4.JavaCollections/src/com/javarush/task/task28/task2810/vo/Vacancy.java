@@ -61,4 +61,30 @@ public class Vacancy {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vacancy)) return false;
+
+        Vacancy vacancy = (Vacancy) o;
+
+        if (!getTitle().equals(vacancy.getTitle())) return false;
+        if (!getSalary().equals(vacancy.getSalary())) return false;
+        if (!getCity().equals(vacancy.getCity())) return false;
+        if (!getCompanyName().equals(vacancy.getCompanyName())) return false;
+        if (!getSiteName().equals(vacancy.getSiteName())) return false;
+        return getUrl().equals(vacancy.getUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTitle().hashCode();
+        result = 31 * result + getSalary().hashCode();
+        result = 31 * result + getCity().hashCode();
+        result = 31 * result + getCompanyName().hashCode();
+        result = 31 * result + getSiteName().hashCode();
+        result = 31 * result + getUrl().hashCode();
+        return result;
+    }
 }
