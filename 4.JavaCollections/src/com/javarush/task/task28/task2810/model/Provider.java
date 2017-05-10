@@ -25,9 +25,6 @@ public class Provider {
         if (this.strategy == null)
             return Collections.emptyList();
 
-
             return strategy.getVacancies(searchString);
-
-
     }
 }
