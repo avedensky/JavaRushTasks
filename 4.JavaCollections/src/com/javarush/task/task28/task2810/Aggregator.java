@@ -12,8 +12,7 @@ import com.javarush.task.task28.task2810.model.Provider;
 //Вызов main не должен кидать NullPointerException. Поставь заглушки в необходимых местах.
 public class Aggregator {
     public static void main(String[] args) {
-            Provider provider = new Provider(new HHStrategy());
-            Controller controller = new Controller(provider);
-            controller.scan();
+            //Provider provider = new Provider(new HHStrategy());
+            //Controller controller = new Controller(provider);
     }
 }
