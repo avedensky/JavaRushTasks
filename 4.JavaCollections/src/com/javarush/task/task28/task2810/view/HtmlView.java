@@ -2,12 +2,12 @@ package com.javarush.task.task28.task2810.view;
 
 import com.javarush.task.task28.task2810.Controller;
 import com.javarush.task.task28.task2810.vo.Vacancy;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -15,34 +15,13 @@ import java.util.List;
  */
 
 
-/*1. В классе HtmlView в методе updateFile открой поток для записи в файл.
-        2. Запиши в файл данные, которые метод updateFile получает аргументом.
-        3. Закрой поток записи в файл.*/
-
 public class HtmlView implements View {
+
     private Controller controller;
+    private final String filePath = "./src/" + this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/vacancies.html";
 
-    private final String filePath;
-
-    {
-        filePath = "./src/" + this.getClass().getPackage().getName().replace('.', '/') + "/vacancies.html";
-    }
-
-    private String getUpdatedFileContent(List<Vacancy> list) {
-        return null;
-    }
-
-    private void updateFile(String s) {
-        try {
-            OutputStream outputStream = new FileOutputStream(filePath);
-            outputStream.write(s.getBytes());
-            outputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    protected Document getDocument()  throws IOException {
+        return Jsoup.parse(new File(filePath), "UTF-8");
     }
 
     @Override
@@ -51,6 +30,7 @@ public class HtmlView implements View {
             updateFile(getUpdatedFileContent(vacancies));
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Some exception");
         }
     }
 
@@ -60,6 +40,49 @@ public class HtmlView implements View {
     }
 
     public void userCitySelectEmulationMethod() {
-        controller.onCitySelect("Odessa");
+        controller.onCitySelect("Moscow");
     }
+
+    private String getUpdatedFileContent(List<Vacancy> vacancies) {
+
+        Document doc = null;
+        try {
+            doc = getDocument();
+            Element templateOriginal = doc.getElementsByClass("template").first();
+            Element copyTemplate = templateOriginal.clone();
+            copyTemplate.removeAttr("style");
+            copyTemplate.removeClass("template");
+            doc.select("tr[class=vacancy]").remove().not("tr[class=vacancy template");
+
+            for (Vacancy vacancy : vacancies) {
+
+                Element localClone = copyTemplate.clone();
+
+                localClone.getElementsByClass("city").first().text(vacancy.getCity());
+                localClone.getElementsByClass("companyName").first().text(vacancy.getCompanyName());
+                localClone.getElementsByClass("salary").first().text(vacancy.getSalary());
+                Element link =localClone.getElementsByTag("a").first();
+                link.text(vacancy.getTitle());
+                link.attr("href", vacancy.getUrl());
+
+                templateOriginal.before(localClone.outerHtml());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Some exception occurred";
+        }
+        return doc.html();
+    }
+
+    private void updateFile(String content) {
+
+        try {
+            FileWriter fileWriter = new FileWriter(new File(filePath));
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
