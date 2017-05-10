@@ -2,7 +2,7 @@ package com.javarush.task.task28.task2810.model;
 
 import com.javarush.task.task28.task2810.vo.Vacancy;
 
-import java.io.IOException;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class Provider {
     {
         if (this.strategy == null)
             return Collections.emptyList();
+
 
             return strategy.getVacancies(searchString);
     }

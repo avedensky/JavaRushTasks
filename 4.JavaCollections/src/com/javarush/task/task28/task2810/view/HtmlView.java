@@ -18,7 +18,8 @@ import java.util.List;
 public class HtmlView implements View {
 
     private Controller controller;
-    private final String filePath = "./src/" + this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/vacancies.html";
+    private final String filePath = "C://Users//Alexey//Dropbox//programming//java//Trening//javarush//JavaRushTasks//4.JavaCollections//src//com//javarush//task//task28//task2810//view//vacancies.html";
+    //private final String filePath = "./src/" + this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/vacancies.html";
 
     protected Document getDocument()  throws IOException {
         return Jsoup.parse(new File(filePath), "UTF-8");
@@ -45,19 +46,18 @@ public class HtmlView implements View {
 
     private String getUpdatedFileContent(List<Vacancy> vacancies) {
 
-        Document doc = null;
+        Document document = null;
         try {
-            doc = getDocument();
-            Element templateOriginal = doc.getElementsByClass("template").first();
+            document = getDocument();
+
+            Element templateOriginal = document.getElementsByClass("template").first();
             Element copyTemplate = templateOriginal.clone();
             copyTemplate.removeAttr("style");
             copyTemplate.removeClass("template");
-            doc.select("tr[class=vacancy]").remove().not("tr[class=vacancy template");
+            document.select("tr[class=vacancy]").remove().not("tr[class=vacancy template");
 
             for (Vacancy vacancy : vacancies) {
-
                 Element localClone = copyTemplate.clone();
-
                 localClone.getElementsByClass("city").first().text(vacancy.getCity());
                 localClone.getElementsByClass("companyName").first().text(vacancy.getCompanyName());
                 localClone.getElementsByClass("salary").first().text(vacancy.getSalary());
@@ -71,7 +71,7 @@ public class HtmlView implements View {
             e.printStackTrace();
             return "Some exception occurred";
         }
-        return doc.html();
+        return document.html();
     }
 
     private void updateFile(String content) {
