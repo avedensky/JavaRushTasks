@@ -1,5 +1,7 @@
 package com.javarush.task.task26.task2613;
 
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +9,13 @@ import java.io.InputStreamReader;
 /**
  * Created by Alexey on 11.05.2017.
  */
+
+//2. В классе ConsoleHelper реализуй логику статического метода Operation askOperation().
+//        Спросить у пользователя операцию.
+//        Если пользователь вводит 1, то выбирается команда INFO, 2 — DEPOSIT, 3 — WITHDRAW, 4 — EXIT;
+//        Используйте метод, описанный в п.1.
+//        Обработай исключение — запроси данные об операции повторно.
+
 public class ConsoleHelper {
     private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
 
@@ -20,11 +29,6 @@ public class ConsoleHelper {
         return line;
     }
 
-
-    //    2. Чтобы считать код валюты, добавим статический метод String askCurrencyCode() в ConsoleHelper.
-//    Этот метод должен предлагать пользователю ввести код валюты, проверять, что код содержит 3 символа.
-//    Если данные некорректны, то сообщить об этом пользователю и повторить.
-//    Если данные валидны, то перевести код в верхний регистр и вернуть.
     public static String askCurrencyCode() throws IOException {
         {
             String code = null;
@@ -41,11 +45,21 @@ public class ConsoleHelper {
         }
     }
 
-//    3. Чтобы считать номинал и количество банкнот, добавим статический метод String[] getValidTwoDigits(String currencyCode) в ConsoleHelper.
-//    Этот метод должен предлагать пользователю ввести два целых положительных числа.
-//    Первое число — номинал, второе — количество банкнот.
-//    Никаких валидаторов на номинал нет. Т.е. 1200 — это нормальный номинал.
-//    Если данные некорректны, то сообщить об этом пользователю и повторить.
+    public static Operation askOperation(){
+        do {
+            writeMessage("Choice operation:\n1) INFO\n2) DEPOSIT\n3) WITHDRAW\n4) EXIT");
+            try {
+                int choice = Integer.parseInt(readString());
+                return Operation.getAllowableOperationByOrdinal(choice);
+            } catch (IllegalArgumentException e) {
+                writeMessage("You input wrong! Try Again.");
+                continue;
+            } catch (IOException e) {
+                writeMessage("You input wrong! Try Again.");
+                continue;
+            }
+        } while (true);
+    }
 
     public static String[] getValidTwoDigits(String currencyCode) throws IOException {
         writeMessage("Input nominal and total:");

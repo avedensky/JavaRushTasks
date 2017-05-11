@@ -7,33 +7,52 @@ import java.util.Locale;
  * Created by Alexey on 11.05.2017.
  */
 
-enum Operation {INFO, DEPOSIT, WITHDRAW, EXIT}
-
-//1. Выберем операцию, с которой мы сможем начать.
-//Подумаем. В банкомате еще денег нет, поэтому INFO и WITHDRAW протестить не получится.
-//Начнем с операции DEPOSIT — поместить деньги.
-//Считаем с консоли код валюты, потом считаем номинал и количество банкнот,
-// а потом добавим их в манипулятор.
-
+// Такое решение не проходит
+//enum Operation {
+//    INFO, DEPOSIT, WITHDRAW, EXIT;
 //
-//5. Пора уже увидеть приложение в действии.
-//В методе main захардкодь логику пункта 1.
-//Кстати, чтобы не было проблем с тестами на стороне сервера, добавь в метод main первой
-// строчкой Locale.setDefault(Locale.ENGLISH);
-//Запускаем, дебажим, смотрим.
-
-//Метод main класса CashMachine должен считывать с консоли код валюты, потом считывать номинал
-// и количество банкнот, а потом добавлять их в манипулятор.
+//    public static Operation getAllowableOperationByOrdinal(Integer i) throws IllegalArgumentException {
+//        for (Operation o : Operation.values())
+//            if (o.ordinal() == i)
+//                return o;
 //
+//        throw new IllegalArgumentException();
+//    }
+//}
+
+//A так работает...
+enum Operation {
+    INFO, DEPOSIT, WITHDRAW, EXIT;
+
+    public static Operation getAllowableOperationByOrdinal(Integer i)
+    {
+        switch (i)
+        {
+            case 1:
+                return INFO;
+            case 2:
+                return DEPOSIT;
+            case 3:
+                return WITHDRAW;
+            case 4:
+                return EXIT;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+}
+
+
+
 public class CashMachine {
     public static void main(String[] args) throws IOException {
-        Locale.setDefault(Locale.ENGLISH);
-        CurrencyManipulator currencyManipulator;
-
-        String code = ConsoleHelper.askCurrencyCode();
-        String[] strs = ConsoleHelper.getValidTwoDigits(code);
-        currencyManipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(code);
-        currencyManipulator.addAmount(Integer.parseInt(strs[0]), Integer.parseInt(strs[1]));
-        System.out.println(currencyManipulator.getTotalAmount());
+//        Locale.setDefault(Locale.ENGLISH);
+//        CurrencyManipulator currencyManipulator;
+//
+//        String code = ConsoleHelper.askCurrencyCode();
+//        String[] strs = ConsoleHelper.getValidTwoDigits(code);
+//        currencyManipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(code);
+//        currencyManipulator.addAmount(Integer.parseInt(strs[0]), Integer.parseInt(strs[1]));
+//        System.out.println(currencyManipulator.getTotalAmount());
     }
 }
