@@ -7,7 +7,6 @@ import java.util.Map;
  * Created by Alexey on 11.05.2017.
  */
 
-
 public class CurrencyManipulator {
     private String currencyCode;
     private Map<Integer, Integer> denominations;
@@ -32,9 +31,13 @@ public class CurrencyManipulator {
 
     public int getTotalAmount() {
         int sum = 0;
-        for(Map.Entry<Integer,Integer> pair : denominations.entrySet())
-            sum +=pair.getKey() * pair.getValue();
+        for (Map.Entry<Integer, Integer> pair : denominations.entrySet())
+            sum += pair.getKey() * pair.getValue();
 
         return sum;
+    }
+
+    public boolean hasMoney() {
+        return denominations.size() != 0;
     }
 }
