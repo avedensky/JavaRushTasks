@@ -1,8 +1,9 @@
 package com.javarush.task.task26.task2613;
 
 import com.javarush.task.task26.task2613.command.CommandExecutor;
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+import com.javarush.task.task26.task2613.exception.NotEnoughMoneyException;
 
-import java.io.IOException;
 import java.util.Locale;
 
 /**
@@ -11,22 +12,19 @@ import java.util.Locale;
 
 
 public class CashMachine {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        Locale.setDefault(Locale.ENGLISH);
 
-        Operation operation;
-        do {
-            operation = ConsoleHelper.askOperation();
-            CommandExecutor.execute(operation);
-        } while (operation != Operation.EXIT);
-
-
-//        Locale.setDefault(Locale.ENGLISH);
-//        CurrencyManipulator currencyManipulator;
-//
-//        String code = ConsoleHelper.askCurrencyCode();
-//        String[] strs = ConsoleHelper.getValidTwoDigits(code);
-//        currencyManipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(code);
-//        currencyManipulator.addAmount(Integer.parseInt(strs[0]), Integer.parseInt(strs[1]));
-//        System.out.println(currencyManipulator.getTotalAmount());
+        try {
+            Operation operation;
+            do {
+                operation = ConsoleHelper.askOperation();
+                CommandExecutor.execute(operation);
+            } while (operation != Operation.EXIT);
+        } catch (InterruptOperationException e) {
+            ConsoleHelper.writeMessage("Bay");
+        } catch (NotEnoughMoneyException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,26 +10,26 @@ import java.io.InputStreamReader;
  * Created by Alexey on 11.05.2017.
  */
 
-//2. В классе ConsoleHelper реализуй логику статического метода Operation askOperation().
-//        Спросить у пользователя операцию.
-//        Если пользователь вводит 1, то выбирается команда INFO, 2 — DEPOSIT, 3 — WITHDRAW, 4 — EXIT;
-//        Используйте метод, описанный в п.1.
-//        Обработай исключение — запроси данные об операции повторно.
-
 public class ConsoleHelper {
-    private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
+    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static void writeMessage(String message) {
         System.out.println(message);
-
     }
 
-    public static String readString() throws IOException {
-        String line = bis.readLine();
-        return line;
+    public static String readString() throws InterruptOperationException {
+        String input = "";
+        try {
+            input = reader.readLine();
+            if (input.equalsIgnoreCase("exit")) {
+                throw new InterruptOperationException();
+            }
+        } catch (IOException ignored) {}
+
+        return input;
     }
 
-    public static String askCurrencyCode() throws IOException {
+    public static String askCurrencyCode() throws InterruptOperationException {
         {
             String code = null;
             writeMessage("Please choice currency code:");
@@ -45,23 +45,21 @@ public class ConsoleHelper {
         }
     }
 
-    public static Operation askOperation(){
+
+    public static Operation askOperation() throws InterruptOperationException {
         do {
             writeMessage("Choice operation:\n1) INFO\n2) DEPOSIT\n3) WITHDRAW\n4) EXIT");
             try {
-                int choice = Integer.parseInt(readString());
-                return Operation.getAllowableOperationByOrdinal(choice);
+                String input = readString();
+                return Operation.getAllowableOperationByOrdinal(Integer.parseInt(input));
             } catch (IllegalArgumentException e) {
-                writeMessage("You input wrong! Try Again.");
-                continue;
-            } catch (IOException e) {
                 writeMessage("You input wrong! Try Again.");
                 continue;
             }
         } while (true);
     }
 
-    public static String[] getValidTwoDigits(String currencyCode) throws IOException {
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
         writeMessage("Input nominal and total:");
 
         String[] input;

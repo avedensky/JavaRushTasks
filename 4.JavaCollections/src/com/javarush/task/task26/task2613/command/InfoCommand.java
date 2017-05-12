@@ -3,6 +3,7 @@ package com.javarush.task.task26.task2613.command;
 import com.javarush.task.task26.task2613.ConsoleHelper;
 import com.javarush.task.task26.task2613.CurrencyManipulator;
 import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 
 /**
  * Created by Alexey on 11.05.2017.
@@ -10,7 +11,7 @@ import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
 class InfoCommand implements Command {
 
     @Override
-    public void execute() {
+    public void execute() throws InterruptOperationException {
         boolean money = false;
 
         for (CurrencyManipulator currency : CurrencyManipulatorFactory.getAllCurrencyManipulators())
