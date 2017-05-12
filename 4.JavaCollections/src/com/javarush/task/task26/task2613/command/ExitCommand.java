@@ -16,13 +16,18 @@ import java.io.IOException;
  */
 class ExitCommand implements Command {
 
+
     @Override
     public void execute() throws InterruptOperationException
     {
         ConsoleHelper.writeMessage("Are you sure want to quit? (y,n):");
-        String answer = ConsoleHelper.readString();
-        if (answer.equalsIgnoreCase("y")){
-            ConsoleHelper.writeMessage("Bye");
+        try {
+            String s = ConsoleHelper.readString();
+            if (s.equalsIgnoreCase("Y")) {
+                ConsoleHelper.writeMessage("Bye");
+            }
+        } catch (InterruptOperationException e) {
+            throw new InterruptOperationException ();
         }
     }
 }
