@@ -5,4 +5,5 @@ package com.javarush.task.task23.task2312;
  * MAIL: avedensky@gmail.com
  */
 public class Mouse {
+    private int x, y;
 }
