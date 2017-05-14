@@ -6,16 +6,15 @@ import java.awt.*;
  * Created by Alex Vedensky on 14.05.2017.
  * MAIL: avedensky@gmail.com
  */
-public class Home extends GameObject {
-    public Home(int x, int y) {
+public class Wall extends CollisionObject {
+
+    public Wall(int x, int y) {
         super(x, y);
-        setWidth(2);
-        setHeight(2);
     }
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.setColor(Color.RED);
+        graphics.setColor(Color.DARK_GRAY);
 
         int leftUpperCornerX = getX() - getWidth() / 2;
         int leftUpperCornerY = getY() - getHeight() / 2;
