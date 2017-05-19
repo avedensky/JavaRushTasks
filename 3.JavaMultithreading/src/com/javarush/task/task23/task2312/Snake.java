@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Alex Vedensky on 14.05.2017.
+ * Created by Alex Vedensky on 17.05.2017.
  * MAIL: avedensky@gmail.com
  */
 public class Snake {
