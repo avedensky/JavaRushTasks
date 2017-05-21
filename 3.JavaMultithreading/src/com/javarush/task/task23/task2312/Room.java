@@ -58,7 +58,19 @@ public class Room {
         this.mouse = mouse;
     }
 
+    public void run () {
+
+    }
+
+    public void sleep () {
+
+    }
+
     public static void main(String[] args) {
+        Snake snake = new Snake(5,5);
+        Room room = new Room(20,20, snake);
+        room.createMouse();
+        room.run();
 
     }
 }
