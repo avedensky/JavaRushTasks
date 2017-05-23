@@ -2,6 +2,8 @@ package com.javarush.task.task23.task2312;
 
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Основной класс программы.
@@ -92,12 +94,57 @@ public class Room {
 
     /**
      * Выводим на экран текущее состояние игры
+     * <p>
+     * Теперь поработаем над методом print().
+     * <p>
+     * Надо:
+     * а) вывести на экран прямоугольник из точек размером width x height.
+     * б) тело змеи отметить символом «x«-английское
+     * в) голову змеи нарисовать символом «X«-английское.
+     * <p>
+     * Подсказка:
+     * а) удобно сначала создать матрицу типа int[][] с размером (height x width)
+     * б) затем пройтись по всем объектам и отрисовать их в матрицу.
+     * Например, тело змеи — 1, голова змеи — 2, мышь — 3.
+     * <p>
+     * <p>
+     * Требования:
+     * 1. Метод print должен выводить данные на экран.
+     * 2. Метод print должен выводить на экран количество строк равное height.
+     * 3. Количество символов в каждой строке выведенной на экран должно быть равно width.
+     * 4. Голова змеи должна быть отмечена символом X.
+     * 5. Тело змеи должно быть отмечено символами x.
+     * 6. Мышь должна быть отмечена символом ^.
      */
     public void print() {
         //Создаем массив, куда будем "рисовать" текущее состояние игры
         //Рисуем все кусочки змеи
         //Рисуем мышь
         //Выводим все это на экран
+        //Создаем массив, куда будем "рисовать" текущее состояние игры
+
+        int[][] screen = new int[height][width];
+        List<SnakeSection> snakeSections = snake.getSections();
+
+        for (SnakeSection snakeSection : snakeSections)
+            screen[snakeSection.getY()][snakeSection.getX()] = 1;
+
+        screen[snake.getY()][snake.getX()] = 2;
+        screen[mouse.getY()][mouse.getX()] = 3;
+
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                if (screen[j][i] == 1)
+                    System.out.print("x");
+                else if (screen[j][i] == 2)
+                    System.out.print("X");
+                else if (screen[j][i] == 3)
+                    System.out.print("^");
+                else
+                    System.out.print(".");
+            }
+            System.out.println();
+        }
     }
 
     /**
