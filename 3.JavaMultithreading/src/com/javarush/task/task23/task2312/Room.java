@@ -3,7 +3,6 @@ package com.javarush.task.task23.task2312;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Основной класс программы.
@@ -94,57 +93,34 @@ public class Room {
 
     /**
      * Выводим на экран текущее состояние игры
-     * <p>
-     * Теперь поработаем над методом print().
-     * <p>
-     * Надо:
-     * а) вывести на экран прямоугольник из точек размером width x height.
-     * б) тело змеи отметить символом «x«-английское
-     * в) голову змеи нарисовать символом «X«-английское.
-     * <p>
-     * Подсказка:
-     * а) удобно сначала создать матрицу типа int[][] с размером (height x width)
-     * б) затем пройтись по всем объектам и отрисовать их в матрицу.
-     * Например, тело змеи — 1, голова змеи — 2, мышь — 3.
-     * <p>
-     * <p>
-     * Требования:
-     * 1. Метод print должен выводить данные на экран.
-     * 2. Метод print должен выводить на экран количество строк равное height.
-     * 3. Количество символов в каждой строке выведенной на экран должно быть равно width.
-     * 4. Голова змеи должна быть отмечена символом X.
-     * 5. Тело змеи должно быть отмечено символами x.
-     * 6. Мышь должна быть отмечена символом ^.
      */
     public void print() {
         //Создаем массив, куда будем "рисовать" текущее состояние игры
+        int[][] matrix = new int[height][width];
+
         //Рисуем все кусочки змеи
+        ArrayList<SnakeSection> sections = new ArrayList<SnakeSection>(snake.getSections());
+        for (SnakeSection snakeSection : sections) {
+            matrix[snakeSection.getY()][snakeSection.getX()] = 1;
+        }
+
+        //Рисуем голову змеи (4 - если змея мертвая)
+        matrix[snake.getY()][snake.getX()] = snake.isAlive() ? 2 : 4;
+
         //Рисуем мышь
+        matrix[mouse.getY()][mouse.getX()] = 3;
+
         //Выводим все это на экран
-        //Создаем массив, куда будем "рисовать" текущее состояние игры
-
-        int[][] screen = new int[height][width];
-        List<SnakeSection> snakeSections = snake.getSections();
-
-        for (SnakeSection snakeSection : snakeSections)
-            screen[snakeSection.getY()][snakeSection.getX()] = 1;
-
-        screen[snake.getY()][snake.getX()] = 2;
-        screen[mouse.getY()][mouse.getX()] = 3;
-
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                if (screen[j][i] == 1)
-                    System.out.print("x");
-                else if (screen[j][i] == 2)
-                    System.out.print("X");
-                else if (screen[j][i] == 3)
-                    System.out.print("^");
-                else
-                    System.out.print(".");
+        String[] symbols = {" . ", " x ", " X ", "^_^", "RIP"};
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.out.print(symbols[matrix[y][x]]);
             }
             System.out.println();
         }
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
 
     /**
@@ -175,36 +151,18 @@ public class Room {
     }
 
 
+    private int initialDelay = 520;
+    private int delayStep = 20;
+
     /**
      * Программа делает паузу, длинна которой зависит от длинны змеи.
      */
-
-
-//    Предлагаю тебе в этот раз написать специальный метод sleep(), который будет делать паузу
-//  в зависимости от длины змеи (количества элементов в sections).
-//    Придумай какой-нибудь хитрый алгоритм. Чтобы на первом уровне пауза была 500 миллисекунд,
-//    а к 10 уровню постепенно уменьшилась до 300. А к 15 до 200. И дальше оставалась постоянной.
-//
-//
-//    Требования:
-//            1. Метод sleep должен вызывать метод Thread.sleep(500) в начале игры.
-//            2. Метод sleep должен вызывать метод Thread.sleep(300) на 11 уровне.
-//3. Метод sleep должен вызывать метод Thread.sleep(200) для уровней больше 15.
     public void sleep() {
-        int pause = 0;
-        int section = snake.getSections().size();
-
-        if (section < 17)
-            pause = 520 - section * 20;
-
-        if (section > 15)
-            pause = 200;
         try {
-            Thread.sleep(pause);
+            int level = snake.getSections().size();
+            int delay = level < 15 ? (initialDelay - delayStep * level) : 200;
+            Thread.sleep(delay);
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
         }
-
     }
-
 }
