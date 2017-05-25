@@ -8,22 +8,24 @@ import java.util.List;
  * MAIL: avedensky@gmail.com
  */
 public class Snake {
-    private List<SnakeSection> sections;
+    private ArrayList<SnakeSection> sections;
+    //private ArrayList<SnakeSection> sections = new ArrayList<>();
+
 
     private boolean isAlive;
     private SnakeDirection direction;
 
 
     public Snake(int x, int y) {
-        sections = new ArrayList<>();
+        this.sections = new ArrayList<>();
         this.isAlive = true;
 
         SnakeSection snakeSection = new SnakeSection(x, y);
         sections.add(snakeSection);
     }
 
-    public List<SnakeSection> getSections() {
-        return sections;
+    public ArrayList<SnakeSection> getSections() {
+        return this.sections;
     }
 
     public boolean isAlive() {
@@ -47,28 +49,55 @@ public class Snake {
     }
 
     /*
-    В методе move без параметров необходимо:
-    а) прекратить движение если змея умерла(isAlive == false)
-    б) вызвать метод move(0, -1) если направление движения равно SnakeDirection.UP
-    в) вызвать метод move(1, 0) если направление движения равно SnakeDirection.RIGHT
-    г) вызвать метод move(0, 1) если направление движения равно SnakeDirection.DOWN
-    д) вызвать метод move(-1, 0) если направление движения равно SnakeDirection.LEFT
+    Ничто не вечно. Так и змея должна умирать, если она врезается в стену или саму себя.
+
+Для определения, не пересекается ли змея сама с собой, можно сделать очень простую проверку:
+содержит ли список sections «новую голову змеи«.
+
+Код для этого будет выглядеть примерно так:
+if (sections.contains(head))
+
+При этом head должен быть еще не добавлен в список sections, иначе будет всегда true.
+Но чтобы этот код работал, надо реализовать методы сравнения объектов (equals и hashCode) в классе SnakeSection.
+
+    б) реализуй метод checkBorders(SnakeSection head): если голова змеи за границами комнаты — змея умирает (isAlive = false)
+    в) реализуй метод checkBody(SnakeSection head): если голова змеи пересекается с ее телом — змея умирает (isAlive = false)
      */
+
+    //Validator не принял
+    private void checkBorders(SnakeSection head) {
+        if (head.getX() < 0)
+            isAlive = false;
+        if (head.getX() >= Room.game.getWidth())
+            isAlive = false;
+        if (head.getY() < 0)
+            isAlive = false;
+        if (head.getY() >= Room.game.getHeight())
+            isAlive = false;
+    }
+
+
+    private void checkBody(SnakeSection head) {
+        if (sections.contains(head)) {
+            isAlive = false;
+        }
+    }
+
     public void move() {
-        if (isAlive){
-            if (direction==SnakeDirection.UP){
-                move(0,-1);
-            } else if (direction==SnakeDirection.RIGHT){
-                move(1,0);
-            } else if (direction==SnakeDirection.DOWN){
-                move(0,1);
-            } else if (direction==SnakeDirection.LEFT){
-                move(-1,0);
+        if (isAlive) {
+            if (direction == SnakeDirection.UP) {
+                move(0, -1);
+            } else if (direction == SnakeDirection.RIGHT) {
+                move(1, 0);
+            } else if (direction == SnakeDirection.DOWN) {
+                move(0, 1);
+            } else if (direction == SnakeDirection.LEFT) {
+                move(-1, 0);
             }
         }
     }
 
-    public void move (int x, int y) {
+    public void move(int x, int y) {
 
     }
 }

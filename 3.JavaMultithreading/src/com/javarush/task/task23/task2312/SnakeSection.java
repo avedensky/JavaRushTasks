@@ -10,6 +10,24 @@ public class SnakeSection {
         this.y = y;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SnakeSection that = (SnakeSection) o;
+
+        if (this.x != that.x) return false;
+        if (this.y != that.y) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * x + y;
+    }
+
     public int getX() {
         return x;
     }
