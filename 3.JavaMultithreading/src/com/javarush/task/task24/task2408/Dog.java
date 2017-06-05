@@ -34,11 +34,11 @@ public class Dog implements Pet {
      * Для форматирования даты используйте formatter из класса SuperDog.
      * <p/>
      * <b>Пример вывода:</b>
-     *  *** Барбос ***  лает гааааав! 13-ноя-2013 Ср
-     *  *** Тузик ***  лает гаав! 13-ноя-2013 Ср
-     *  *** Бобик ***  лает гааав! 13-ноя-2013 Ср
+     * *** Барбос ***  лает гааааав! 13-ноя-2013 Ср
+     * *** Тузик ***  лает гаав! 13-ноя-2013 Ср
+     * *** Бобик ***  лает гааав! 13-ноя-2013 Ср
      * Мыша пищит.
-     *  *** Шарик ***  спит.
+     * *** Шарик ***  спит.
      *
      * @param i количество букв 'а' в слове гав
      * @return экземпляр класса DogPet
@@ -47,21 +47,21 @@ public class Dog implements Pet {
         class DogPet extends SuperDog implements Sayable {
 
             private String getName() {
-                return getSuperQuotes ()+Dog.this.name+getSuperQuotes ();
+                return getSuperQuotes() + Dog.this.name + getSuperQuotes();
             }
 
             @Override
             public String say() {
                 if (i < 1)
-                    return getName ()+" спит.";
+                    return getName() + " спит.";
                 else {
                     StringBuffer sbuf = new StringBuffer();
-                    for (int j=0; j<i; j++)
+                    for (int j = 0; j < i; j++)
                         sbuf.append("а");
-                    return getName() + " лает г"+sbuf+"в! " + formatter.format(new Date());
+                    return getName() + " лает г" + sbuf + "в! " + formatter.format(new Date());
                 }
             }
         }
-      return new DogPet();
+        return new DogPet();
     }
 }
