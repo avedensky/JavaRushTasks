@@ -25,37 +25,33 @@ public class Solution {
         System.out.println(getExpectedClass());
     }
 
-    public static Class getExpectedClass(){
+ public static Class getExpectedClass() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
-        for (Class clazz : Collections.class.getDeclaredClasses()) { //get Classes
-            for (Class intrf : clazz.getInterfaces()) { //get interfaces
-                if (intrf.getSimpleName().equals("List") && Modifier.isStatic(clazz.getModifiers())) {
-                    {
-                        //System.out.println(clazz.getName());
-                        // But here i see only:
-                        //java.util.Collections$CheckedList
-                        //java.util.Collections$SynchronizedList
-                        //java.util.Collections$UnmodifiableList
+        Class[] classes = Collections.class.getDeclaredClasses();
+        for (Class c : classes){
 
-                        //Where is ?
-                        //java.util.Collections$EmptyList
-
-                        //Чтобы появился java.util.Collections$EmptyList надо проверять интерфейсы еще и у родителей по иерархии
-                        //в данном случае AbstractList от которого наследуется java.util.Collections$EmptyList и реализует интерфейс List
-                        //В текущем алгоритме интерфейсы проверяются только у самого класса, а надо как я написал.
-                        //Задачу здал благодаря хаку, ниже.
+            if(Modifier.isPrivate(c.getModifiers()))
+                if(Modifier.isStatic(c.getModifiers()))
+                {
+                if(List.class.isAssignableFrom(c))
+                {
+                    try{
+                        Constructor constructor = c.getDeclaredConstructor();
+                        constructor.setAccessible(true);
+                        List list = (List) constructor.newInstance();
+                        list.get(0);
+                    }catch (IndexOutOfBoundsException e){
+                        // вернуть класс
+                        return c;
+                    } catch (NoSuchMethodException e) {
+                        //e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        //e.printStackTrace();
                     }
                 }
-            }
-        }
 
-        //Googling... This is true answer...
-        try {
-            return Class.forName("java.util.Collections$EmptyList");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+                }
         }
         return null;
-
     }
 }
