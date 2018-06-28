@@ -27,7 +27,7 @@ public class Solution {
         System.out.println(isOneEditAway("mamas", "rama")); //false
         System.out.println(isOneEditAway("rama", "mama")); //true
         System.out.println(isOneEditAway("mama", "dama")); //true
-        System.out.println(isOneEditAway("ama", "mama"));  //true
+        System.out.println(isOneEditAway("amms", "amm"));  //false
         System.out.println(isOneEditAway("mama", "ama")); //true
     }
 
@@ -42,6 +42,7 @@ public class Solution {
         if (first.equals("") && second.equals(""))
             return true;
 
+
         if(first.equals(second))
             return true; //Странно это... Т.к. по условию задачи, True - только когда возможно изменение... Но валидатору виднее
 
@@ -49,15 +50,23 @@ public class Solution {
         StringBuffer s2 = (first.length() < second.length()) ? new StringBuffer(first) : new StringBuffer(second);
 
         for (int i = 0; i < s2.length(); i++) {
-            int pos = s1.indexOf(String.valueOf(s2.charAt(i)));
-            if (pos != -1)
-                s1.deleteCharAt(pos);
+
+            if (s1.charAt(i) != s2.charAt(i)) {
+
+                if (delta != 0) {
+                    s1.deleteCharAt(i);
+                } else {
+                    s1.deleteCharAt(i);
+                    s2.deleteCharAt(i);
+                }
+
+                break;
+            }
         }
 
-        if (s1.length() == 1)
-            return true;
+        if (s1.length() != s2.length()) s1.deleteCharAt(s1.length()-1);
 
-        return false;
+        return s1.toString().equals(s2.toString());
 
     }
 }
