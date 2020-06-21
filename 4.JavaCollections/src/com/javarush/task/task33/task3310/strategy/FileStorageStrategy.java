@@ -11,9 +11,11 @@ package com.javarush.task.task33.task3310.strategy;
 //чтобы обеспечивать корректную работу Shortener созданного на его основе.
 public class FileStorageStrategy implements StorageStrategy {
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
+    private static final long DEFAULT_BUCKET_SIZE_LIMIT = 10000;
     private FileBucket[] table = new FileBucket[DEFAULT_INITIAL_CAPACITY];
-    private long bucketSizeLimit = 10000;
+    private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT;
     private int size;
+    private long maxBucketSize;
 
     public FileStorageStrategy() {
         for (int i = 0; i < DEFAULT_INITIAL_CAPACITY; i++) {
